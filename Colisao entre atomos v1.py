@@ -1,4 +1,3 @@
-from pickletools import anyobject
 import pygame
 import random as rd
 import math
@@ -7,7 +6,7 @@ import numpy as np
 pygame.init()
 
 # Simulação da caixa por meio de uma janela
-width, height = 600, 600
+width, height = 1000, 600
 window = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Simulação de Colisão de Partículas")
 
@@ -56,8 +55,8 @@ class Particle:
 
             if distancia_futura < distancia:
 
-                k1 = (-2 * other.massa)/(self.massa + other.massa)
-                k2 = (-2 * self.massa)/(self.massa + other.massa) 
+                k2 = (-2 * other.massa)/(self.massa + other.massa)
+                k1 = (-2 * self.massa)/(self.massa + other.massa) 
 
                 esca1 = np.array([self.speed_x-other.speed_x, self.speed_y-other.speed_y])
                 v1 = np.array([self.speed_x, self.speed_y])
@@ -112,25 +111,37 @@ def CriarParticulas(MASSA1,MASSA2,VEL_X_MAX, VEL_Y_MAX):
 # print(lista_particulas[1])
 #for i in range(len(lista_particulas))
 lista_particulas = []
-for _ in range(15):
-    p = CriarParticulas(7,10,6,6)
-    lista_particulas.append(p)
-# p_1 = Particle(width // 3, height // 2 + 50, 10, 0, 1, blue)
-# p_2 = Particle(width // 3, height // 2 - 50, 10, 1, 2, red)
-# p_3 = Particle(width // 3, height // 2 - 50, 10, 1, 2, green)
-# p_4 = Particle(width // 3, height // 2 - 50, 10, 1, 2, blue)
-# p_5 = Particle(width // 3, height // 2 - 50, 10, 1, 2, red)
-# p_6 = Particle(width // 3, height // 2 - 50, 10, 1, 2, green)
-# p_7 = Particle(width // 3, height // 2 - 50, 10, 1, 2, blue)
-# p_8 = Particle(width // 3, height // 2 - 50, 10, 1, 2, red)
-# p_9 = Particle(width // 3, height // 2 - 50, 10, 1, 2, green)
-# p_10 = Particle(width // 3, height // 2 - 50, 10, 1, 2, blue)
-# p_11 = Particle(width // 3, height // 2 - 50, 10, 1, 2, red)
-# p_12 = Particle(width // 3, height // 2 - 50, 10, 1, 2, green)
-# p_13 = Particle(width // 3, height // 2 - 50, 10, 1, 2, blue)
-# p_14 = Particle(width // 3, height // 2 - 50, 10, 1, 2, red)
-# p_15 = Particle(width // 3, height // 2 - 50, 10, 1, 2, green)
 
+p_1 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_1)
+p_2 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_2)
+p_3 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_3)
+p_4 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_4)
+p_5 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_5)
+p_6 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_6)
+p_7 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_7)
+p_8 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_8)
+p_9 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_9)
+p_10 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_10)
+p_11 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_11)
+p_12 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_12)
+p_13 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_13)
+p_14 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_14)
+p_15 = CriarParticulas(4,10,3,3)
+lista_particulas.append(p_15)
 
 # Rodando a simulação
 sim = True
@@ -147,13 +158,16 @@ while sim:
     for p in lista_particulas:
         p.movimento()
 
-    lista = lista_particulas.copy
+    lista = lista_particulas.copy()
 
-    for p in lista:
-        lista_ = lista.remove(p)
+   # print(lista)
+
+    for n in lista:
+        lista.remove(n)
+       # print(lista)
 
         for _ in lista:
-            p.colisao(_)
+            n.colisao(_)
 
     
     for p in lista_particulas:
