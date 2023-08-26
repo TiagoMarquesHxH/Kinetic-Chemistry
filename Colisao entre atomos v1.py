@@ -4,6 +4,7 @@ import math
 import numpy as np
 import constantes as con
 import classes
+import funcoes as fn
 
 pygame.init()
 
@@ -35,16 +36,10 @@ for name, value in zip(lista_p, values):
 
 variable_list = [(name, getattr(variables, name)) for name in lista_p]
 
-# Print the entire list containing names and values
-
-def CriarParticulas(MASSA1,MASSA2,VEL_X_MAX, VEL_Y_MAX):
-    p = classes.Particle(rd.randint(20, con.width - 20),rd.randint(20, con.height - 20), rd.choice((MASSA1,MASSA2)),rd.randint(0,VEL_X_MAX), rd.randint(0,VEL_Y_MAX))
-    return p
-
 lista_particula = []
 
 for name, value in variable_list:
-    valor = CriarParticulas(10,4,3,3)
+    valor = fn.CriarParticulas(10,4,3,3)
     lista_particula.append(valor)
 
 # Rodando a simulação
