@@ -9,9 +9,9 @@ green = (0, 255, 0)
 
 # Tamanho da caixa de simulação
 
-width, height = 1100, 600
+width, height = 600, 600
 window = pygame.display.set_mode((width, height))
 
 # N° de partículas
 
-numero = 60
+numero = 100
