@@ -23,9 +23,13 @@ class Particle:
         self.x += self.speed_x
         self.y += self.speed_y
 
-        if (self.x - self.raio <= 0) or (self.x + self.raio >= con.width):
+        if (self.x - self.raio <= 0) and (self.speed_x <= 0):
             self.speed_x *= -1
-        if (self.y - self.raio <= 0) or (self.y + self.raio >= con.height):
+        if (self.x + self.raio >= con.width) and (self.speed_x >= 0):
+            self.speed_x *= -1
+        if (self.y - self.raio <= 0) and (self.speed_y <= 0):
+            self.speed_y *= -1
+        if (self.y + self.raio >= con.width) and (self.speed_y >= 0):
             self.speed_y *= -1
 
     def colisao(self,other):
