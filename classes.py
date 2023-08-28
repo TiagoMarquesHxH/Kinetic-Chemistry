@@ -11,7 +11,8 @@ class Particle:
         self.x = x
         self.y = y
         self.massa = massa
-        self.raio = massa   
+        self.raio = massa
+        self.area_min = massa * 10
         self.cor = con.green 
 
         self.momento_x = massa * velocidade_x
@@ -29,12 +30,11 @@ class Particle:
             self.speed_x *= -1
         if (self.y - self.raio <= 0) and (self.speed_y <= 0):
             self.speed_y *= -1
-        if (self.y + self.raio >= con.width) and (self.speed_y >= 0):
+        if (self.y + self.raio >= con.height) and (self.speed_y >= 0):
             self.speed_y *= -1
 
     def colisao(self,other):
         distancia = math.sqrt((other.x - self.x)**2 + (other.y - self.y)**2)
-
         if distancia <= self.raio + other.raio:
 
             x_p1_futuro = self.x + self.speed_x
@@ -74,11 +74,11 @@ class Particle:
                 other.speed_x = p_1vel[0]
                 other.speed_y = p_1vel[1]
                 #print (p_1.speed_x, p_1vel)
-
+    
     def desenho(self):
         pygame.draw.circle(con.window, self.cor, (int(self.x), int(self.y)), self.raio)
 
-# Create an instance of the DynamicVariables class
+# Classe para transformar strings em variáveis com atributos
 class DynamicVariables:
     def __init__(self, variable_names):
         for name in variable_names:

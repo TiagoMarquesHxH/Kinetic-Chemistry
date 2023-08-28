@@ -61,12 +61,9 @@ while sim:
     # print(lista)
 
     for p in lista:
-        #lista.remove(p)
-
         for _ in lista:
             p.colisao(_)
     
-        #lista.append(p)
     
     for p in lista_particula:
         p.desenho()
