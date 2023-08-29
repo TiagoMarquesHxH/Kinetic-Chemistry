@@ -35,7 +35,7 @@ lista_particula = []
 
 # Criação das partículas pelos nomes e valores da lista de variáveis
 for nome, valor in lista_variaveis:
-    valores_p = fn.CriarParticulas(10,4,3,3)
+    valores_p = fn.CriarParticulas(10,4,3,3,con.red,con.blue)
     lista_particula.append(valores_p)
 
 # Rodando a simulação

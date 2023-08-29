@@ -7,14 +7,14 @@ import constantes as con
 # Classe para representar as partículas
 
 class Particula:
-    def __init__(self, x, y, massa, velocidade_x, velocidade_y):
+    def __init__(self, x, y, massa, velocidade_x, velocidade_y, cor):
         # Propriedades da partícula
         self.x = x
         self.y = y
         self.massa = massa
         self.raio = massa
         self.area_min = massa * 10
-        self.cor = con.green 
+        self.cor = cor  
         self.momento_x = massa * velocidade_x
         self.momento_y = massa * velocidade_y
         self.speed_x = velocidade_x
