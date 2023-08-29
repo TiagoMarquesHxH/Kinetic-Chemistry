@@ -1,3 +1,4 @@
+# Import das bibliotecas utilizadas e de arquivos .py
 import pygame
 import random as rd
 import math
@@ -6,41 +7,36 @@ import constantes as con
 import classes
 import funcoes as fn
 
-pygame.init()
+pygame.init() # Iniciando a simulação
+pygame.display.set_caption("Simulação de Colisão de Partículas") # Simulação da caixa por meio de uma janela
 
-# Simulação da caixa por meio de uma janela
-pygame.display.set_caption("Simulação de Colisão de Partículas")
-
-# List of strings
-dic_particulas = {}
-
-for i in range(con.numero):
+dic_particulas = {} # Dicionário que contém as partículas em forma de string
+for i in range(con.numero): # Loop para adicionar novas partículas no dicionário, definidas pela constante "numero"
     dic_particulas['p_' + str(i)] = "iterationNumber=="+str(i)
 
 locals().update(dic_particulas)
 
-lista_p = list(dic_particulas.keys())
+lista_p = list(dic_particulas.keys()) # Transformando as chaves (nomes das partículas) do dicionário em uma lista
+variaveis = classes.TransformaVariaveis(lista_p) # Transforma a lista de nomes das partículas em variáveis com atributos
 
-variables = classes.DynamicVariables(lista_p)
-
-# Values to assign
-values = []
+# Valores que serão atribuídos às novas variáveis
+valores = []
 for i in range(con.numero):
-    values.append(i)
+    valores.append(i)
 
-# Assign values to the variables using a loop
-for name, value in zip(lista_p, values):
-    setattr(variables, name, value)
+# Loop que define valores para as variávies
+for nome, valor in zip(lista_p, valores):
+    setattr(variaveis, nome, valor)
 
-# Access the values
 
-variable_list = [(name, getattr(variables, name)) for name in lista_p]
-
+# A lista de variaveis terá nomes e valores atribuidos a estes nomes, para cada nome da lista de particulas
+lista_variaveis = [(nome, getattr(variaveis, nome)) for nome in lista_p]
 lista_particula = []
 
-for name, value in variable_list:
-    valor = fn.CriarParticulas(10,4,3,3)
-    lista_particula.append(valor)
+# Criação das partículas pelos nomes e valores da lista de variáveis
+for nome, valor in lista_variaveis:
+    valores_p = fn.CriarParticulas(10,4,3,3)
+    lista_particula.append(valores_p)
 
 # Rodando a simulação
 sim = True
@@ -53,22 +49,19 @@ while sim:
 
     con.window.fill(con.black)
 
-    # Movendo e desenhando as partículas
+    # Movimento das particulas
     for p in lista_particula:
         p.movimento()
-
     lista = lista_particula.copy()
-    # print(lista)
-
+    # Para cada duas partículas na lista de partículas, calcular a colisão de uma à outra
     for p in lista:
         for _ in lista:
             p.colisao(_)
-    
-    
+    # Desenho de cada partícula
     for p in lista_particula:
         p.desenho()
 
     pygame.display.update()
-    c.tick(60)
+    c.tick(60) # Taxa de atualização do display
 
 pygame.quit()
