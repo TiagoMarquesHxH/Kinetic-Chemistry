@@ -1,4 +1,4 @@
-# Import das bibliotecas utilizadas e de arquivos .py
+# Import das bibliotecas utilizadas e de arquivos.py
 import pygame
 import random as rd
 import math
@@ -6,6 +6,7 @@ import numpy as np
 import constantes as con
 import classes
 import funcoes as fn
+import matplotlib.pyplot as plt
 
 pygame.init() # Iniciando a simulação
 pygame.display.set_caption("Simulação de Colisão de Partículas") # Simulação da caixa por meio de uma janela
@@ -35,12 +36,17 @@ lista_particula = []
 
 # Criação das partículas pelos nomes e valores da lista de variáveis
 for nome, valor in lista_variaveis:
-    valores_p = fn.CriarParticulas(10,4,3,3,con.red,con.blue)
+    valores_p = fn.CriarParticulas(8,8,7,7,con.red,con.blue)
     lista_particula.append(valores_p)
 
 # Rodando a simulação
 sim = True
 c = pygame.time.Clock()
+
+lista_vel = []
+fig, ax = plt.subplots()
+ax.hist(lista_vel, bins=20)
+plt.show(block=False)
 
 while sim:
     for e in pygame.event.get():
@@ -57,6 +63,18 @@ while sim:
     for p in lista:
         for _ in lista:
             p.colisao(_)
+
+    #plt.plot(vel_TRUE,range(0,con.numero))
+    lista_vel = []
+    for p in lista_particula:
+        vel_True = math.sqrt((abs(p.speed_x))**2 + (abs(p.speed_y))**2)
+        lista_vel.append(vel_True)
+    
+    ax.clear()
+    ax.hist(lista_vel, bins = 20)
+    fig.canvas.draw_idle()
+    fig.canvas.flush_events()
+
     # Desenho de cada partícula
     for p in lista_particula:
         p.desenho()
@@ -65,3 +83,4 @@ while sim:
     c.tick(60) # Taxa de atualização do display
 
 pygame.quit()
+plt.close()
