@@ -48,7 +48,7 @@ class Particula:
             #print(distancia_futura, distancia)
 
             if distancia_futura < distancia:
-                
+
                 # Constantes de massa
                 k2 = (-2 * other.massa)/(self.massa + other.massa)
                 k1 = (-2 * self.massa)/(self.massa + other.massa) 
@@ -71,6 +71,11 @@ class Particula:
                 self.speed_y = p_2vel[1]
                 other.speed_x = p_1vel[0]
                 other.speed_y = p_1vel[1]
+
+                return True
+            
+            else:
+                return False
     
     # Desenho da partícula
     def desenho(self):

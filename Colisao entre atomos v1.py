@@ -34,10 +34,29 @@ for nome, valor in zip(lista_p, valores):
 lista_variaveis = [(nome, getattr(variaveis, nome)) for nome in lista_p]
 lista_particula = []
 
+
 # Criação das partículas pelos nomes e valores da lista de variáveis
 for nome, valor in lista_variaveis:
-    valores_p = fn.CriarParticulas(8,8,7,7,con.red,con.blue)
+    valores_p = fn.CriarParticulas(8,6,7,7,con.red,con.blue)
     lista_particula.append(valores_p)
+
+print(lista_particula)
+for i in lista_particula:
+    for j in lista_particula:
+        if i != j:  # Não há interação com ela mesma
+            if i.colisao(j):
+                # Nova particula criada
+                nova_particula = classes.Particula(
+                    (i.x + j.x) / 2,
+                    (i.y + j.y) / 2,
+                    i.massa + j.massa,
+                    (i.speed_x + j.speed_x) / 2,
+                    (i.speed_y + j.speed_y) / 2,
+                    "yellow"
+                )
+                lista_particula.remove(i)
+                lista_particula.remove(j)
+                lista_particula.append(nova_particula)
 
 # Rodando a simulação
 sim = True
@@ -72,6 +91,9 @@ while sim:
     
     ax.clear()
     ax.hist(lista_vel, bins = 20)
+    ax.set_xlabel("N° de Partículas")
+    ax.set_ylabel("Velocidade")
+    ax.set_title("Distribuição de Maxwell-Boltzmann")
     fig.canvas.draw_idle()
     fig.canvas.flush_events()
 
