@@ -9,6 +9,7 @@ import classes
 import funcoes as fn
 import matplotlib.pyplot as plt
 
+Plot_Do_Histograma_Vel = input("Quer Histograma ou não? O padrão é não, se quiser escreva Y")
 
 pygame.init() # Iniciando a simulação
 pygame.display.set_caption("Simulação de Colisão de Partículas") # Simulação da caixa por meio de uma janela
@@ -46,10 +47,11 @@ for nome, valor in lista_variaveis:
 sim = True
 c = pygame.time.Clock()
 
-lista_vel = []
-fig, ax = plt.subplots()
-ax.hist(lista_vel, bins=20)
-plt.show(block=False)
+if Plot_Do_Histograma_Vel == "Y":
+    lista_vel = []
+    fig, ax = plt.subplots()
+    ax.hist(lista_vel, bins=20)
+    plt.show(block=False)
 
 while sim:
     for e in pygame.event.get():
@@ -122,13 +124,14 @@ while sim:
         vel_True = math.sqrt((abs(p.speed_x))**2 + (abs(p.speed_y))**2)
         lista_vel.append(vel_True)
     
-    ax.clear()
-    ax.hist(lista_vel, bins = 20)
-    ax.set_xlabel("N° de Partículas")
-    ax.set_ylabel("Velocidade")
-    ax.set_title("Distribuição de Maxwell-Boltzmann")
-    fig.canvas.draw_idle()
-    fig.canvas.flush_events()
+    if Plot_Do_Histograma_Vel == "Y":
+        ax.clear()
+        ax.hist(lista_vel, bins = 20)
+        ax.set_xlabel("N° de Partículas")
+        ax.set_ylabel("Velocidade")
+        ax.set_title("Distribuição de Maxwell-Boltzmann")
+        fig.canvas.draw_idle()
+        fig.canvas.flush_events()
 
     # Desenho de cada partícula
     for p in lista_particula:
