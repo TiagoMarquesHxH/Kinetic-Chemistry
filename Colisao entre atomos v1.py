@@ -60,6 +60,8 @@ ax1 = []
 ax2 = []
 ax3 = []
 ax4 = []
+axo.plot(ax1,ax2,ax3,ax4)
+plt.show(block=False)
 
 while sim:
     for e in pygame.event.get():
@@ -126,13 +128,11 @@ while sim:
 
             iteracao = False
 
-    #plt.plot(vel_TRUE,range(0,con.numero))
-    lista_vel = []
-    for p in lista_particula:
-        vel_True = math.sqrt((abs(p.speed_x))**2 + (abs(p.speed_y))**2)
-        lista_vel.append(vel_True)
-    
     if Plot_Do_Histograma_Vel == "Y":
+        lista_vel = []
+        for p in lista_particula:
+            vel_True = math.sqrt((abs(p.speed_x))**2 + (abs(p.speed_y))**2)
+            lista_vel.append(vel_True)
         ax.clear()
         ax.hist(lista_vel, bins = 20)
         ax.set_xlabel("Velocidade")
@@ -151,15 +151,15 @@ while sim:
             c3 += 1
         if p.elemento == "D":
             c4 += 1
-    
+    axo.clear()
     ax1.append(c1)
     ax2.append(c2)
     ax3.append(c3)
     ax4.append(c4)
-
-    print(ax1)
-    axo.clear()
-    axo.plot(ax1,ax2,ax3,ax4)
+    axo.plot(ax1)
+    axo.plot(ax2)
+    axo.plot(ax3)
+    axo.plot(ax4)
     axo.set_xlabel("Cada ciclo de simulation")
     axo.set_ylabel("consentarassaum")
     axo.set_title("Concentração de cada tipo de partícula")
