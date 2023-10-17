@@ -10,12 +10,12 @@ yellow = (255,255,0)
 
 # Tamanho da caixa de simulação
 
-width, height = 600, 600
+width, height = 500, 500
 window = pygame.display.set_mode((width, height))
 
 # N° de partículas
 
-numero = 500
+numero = 50
 
-MASSA_NOVA1 = 6
-MASSA_NOVA2 = 4
+MASSA_NOVA1 = 5
+MASSA_NOVA2 = 5

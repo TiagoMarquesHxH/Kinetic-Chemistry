@@ -9,7 +9,7 @@ import classes
 import funcoes as fn
 import matplotlib.pyplot as plt
 
-Plot_Do_Histograma_Vel = input("Quer Histograma ou não? O padrão é não, se quiser escreva Y")
+Plot_Do_Histograma_Vel = input("Quer Histograma ou não? O padrão é não, se quiser escreva Y. ")
 
 pygame.init() # Iniciando a simulação
 pygame.display.set_caption("Simulação de Colisão de Partículas") # Simulação da caixa por meio de uma janela
@@ -45,6 +45,8 @@ for nome, valor in lista_variaveis:
 
 # Rodando a simulação
 sim = True
+
+
 c = pygame.time.Clock()
 
 if Plot_Do_Histograma_Vel == "Y":
@@ -52,6 +54,12 @@ if Plot_Do_Histograma_Vel == "Y":
     fig, ax = plt.subplots()
     ax.hist(lista_vel, bins=20)
     plt.show(block=False)
+
+figo, axo = plt.subplots()
+ax1 = []
+ax2 = []
+ax3 = []
+ax4 = []
 
 while sim:
     for e in pygame.event.get():
@@ -81,8 +89,8 @@ while sim:
                         (p.x),
                         (p.y),
                         con.MASSA_NOVA1,
-                        momentox / (2*con.MASSA_NOVA1),
-                        momentoy / (2*con.MASSA_NOVA1),
+                        momentox, # / (2*con.MASSA_NOVA1),
+                        momentoy, # / (2*con.MASSA_NOVA1),
                         con.green,
                         "C"
                     )   
@@ -99,7 +107,7 @@ while sim:
                         con.yellow,
                         "D"
                     )
-                        lista_particula.append(nova)
+                        # lista_particula.append(nova)
                         del lista_particula[lista_particula.index(_)]
                         del nova
                         del lista
@@ -127,11 +135,36 @@ while sim:
     if Plot_Do_Histograma_Vel == "Y":
         ax.clear()
         ax.hist(lista_vel, bins = 20)
-        ax.set_xlabel("N° de Partículas")
-        ax.set_ylabel("Velocidade")
+        ax.set_xlabel("Velocidade")
+        ax.set_ylabel("Nº de Partículas")
         ax.set_title("Distribuição de Maxwell-Boltzmann")
         fig.canvas.draw_idle()
         fig.canvas.flush_events()
+    
+    c1,c2,c3,c4 = 0,0,0,0
+    for p in lista_particula:
+        if p.elemento == "A":
+            c1 += 1
+        if p.elemento == "B":
+            c2 += 1
+        if p.elemento == "C":
+            c3 += 1
+        if p.elemento == "D":
+            c4 += 1
+    
+    ax1.append(c1)
+    ax2.append(c2)
+    ax3.append(c3)
+    ax4.append(c4)
+
+    print(ax1)
+    axo.clear()
+    axo.plot(ax1,ax2,ax3,ax4)
+    axo.set_xlabel("Cada ciclo de simulation")
+    axo.set_ylabel("consentarassaum")
+    axo.set_title("Concentração de cada tipo de partícula")
+    figo.canvas.draw_idle()
+    figo.canvas.flush_events()
 
     # Desenho de cada partícula
     for p in lista_particula:
