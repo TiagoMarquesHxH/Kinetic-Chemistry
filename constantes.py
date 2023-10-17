@@ -15,7 +15,7 @@ window = pygame.display.set_mode((width, height))
 
 # N° de partículas
 
-numero = 600
+numero = 200
 
 MASSA_NOVA1 = 5
 MASSA_NOVA2 = 5

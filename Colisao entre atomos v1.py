@@ -1,4 +1,5 @@
 # Import das bibliotecas utilizadas e de arquivos.py
+from cProfile import label
 from sre_constants import JUMP
 import pygame
 import random as rd
@@ -91,8 +92,8 @@ while sim:
                         (p.x),
                         (p.y),
                         con.MASSA_NOVA1,
-                        momentox, # / (2*con.MASSA_NOVA1),
-                        momentoy, # / (2*con.MASSA_NOVA1),
+                        momentox/ (2*con.MASSA_NOVA1),
+                        momentoy/ (2*con.MASSA_NOVA1),
                         con.green,
                         "C"
                     )   
@@ -104,12 +105,12 @@ while sim:
                         (_.x),
                         (_.y),
                         con.MASSA_NOVA2,
-                        momentox / (2*con.MASSA_NOVA2),
-                        momentoy / (2*con.MASSA_NOVA2),
+                        momentox/(2*con.MASSA_NOVA2),
+                        momentoy/(2*con.MASSA_NOVA2),
                         con.yellow,
                         "D"
                     )
-                        # lista_particula.append(nova)
+                        lista_particula.append(nova)
                         del lista_particula[lista_particula.index(_)]
                         del nova
                         del lista
@@ -156,13 +157,14 @@ while sim:
     ax2.append(c2)
     ax3.append(c3)
     ax4.append(c4)
-    axo.plot(ax1)
-    axo.plot(ax2)
-    axo.plot(ax3)
-    axo.plot(ax4)
-    axo.set_xlabel("Cada ciclo de simulation")
-    axo.set_ylabel("consentarassaum")
-    axo.set_title("Concentração de cada tipo de partícula")
+    a1 = axo.plot(ax1, label="A")
+    a2 = axo.plot(ax2, label="B")
+    a3 = axo.plot(ax3, label="C")
+    a4 = axo.plot(ax4, label="D")
+    axo.set_xlabel("Tempo")
+    axo.set_ylabel("Partículas")
+    axo.set_title("Concentração")
+    axo.legend()
     figo.canvas.draw_idle()
     figo.canvas.flush_events()
 
