@@ -9,8 +9,12 @@ import constantes as con
 import classes
 import funcoes as fn
 import matplotlib.pyplot as plt
+import pandas as pd
+# from scipy.interpolate import splrep, BSpline
 
-Plot_Do_Histograma_Vel = input("Quer Histograma ou não? O padrão é não, se quiser escreva Y. ")
+
+Plot_Do_Histograma_Vel = " "
+SalvarConcentracoes = "Y"
 
 pygame.init() # Iniciando a simulação
 pygame.display.set_caption("Simulação de Colisão de Partículas") # Simulação da caixa por meio de uma janela
@@ -41,7 +45,7 @@ lista_particula = []
 
 # Criação das partículas pelos nomes e valores da lista de variáveis
 for nome, valor in lista_variaveis:
-    valores_p = fn.CriarParticulas(8,6,7,7,con.red,con.blue,"A","B")
+    valores_p = fn.CriarParticulasRd(8,6,7,7,con.red,con.blue,"A","B")
     lista_particula.append(valores_p)
 
 # Rodando a simulação
@@ -64,6 +68,23 @@ ax4 = []
 axo.plot(ax1,ax2,ax3,ax4)
 plt.show(block=False)
 
+c1,c2,c3,c4 = 0,0,0,0
+for p in lista_particula:
+    if p.elemento == "A":
+        c1+=1
+    if p.elemento == "B":
+        c2+=1
+    if p.elemento == "C":
+        c3+=1
+    if p.elemento == "D":
+        c4+=1
+ax1.append(c1)
+ax2.append(c2)
+ax3.append(c3)
+ax4.append(c4)
+
+contador = 0
+
 while sim:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -74,60 +95,22 @@ while sim:
     # Movimento das particulas
     for p in lista_particula:
         p.movimento()
-    # Para cada duas partículas na lista de partículas, calcular a colisão de uma à outra
-    iteracao = True
-    aaa = False
-    while iteracao == True:
-        lista = lista_particula.copy()
-        for p in lista:
-            for _ in lista:
-                aicnatsid = math.sqrt((p.x - _.x)**2 + (p.y - _.y)**2)
-                if p.elemento != _.elemento and aicnatsid <= p.raio + _.raio:
-                    if p.elemento != "C" and _.elemento != "C" and p.elemento != "D" and _.elemento != "D":
+    
+    for p in lista_particula:
+        for n in lista_particula:
+            aicnatsid = math.sqrt((p.x - n.x)**2 + (p.y - n.y)**2)
+            if ((aicnatsid <= p.raio + n.raio) and (p.elemento == "A" and n.elemento == "B")):
+                p.elemento = "C"
+                p.cor = con.green
+                p.massa = con.MASSA_NOVA1
+                n.elemento = "D"
+                n.cor = con.yellow
+                n.massa = con.MASSA_NOVA2
 
-                        momentox = ((p.momento_x) + (_.momento_x)) / (p.massa + _.massa)
-                        momentoy = ((p.momento_y) + (_.momento_y)) / (p.massa + _.massa)
-            
-                        nova = classes.Particula(
-                        (p.x),
-                        (p.y),
-                        con.MASSA_NOVA1,
-                        momentox/ (2*con.MASSA_NOVA1),
-                        momentoy/ (2*con.MASSA_NOVA1),
-                        con.green,
-                        "C"
-                    )   
-                        lista_particula.append(nova)
-                        del lista_particula[lista_particula.index(p)]
-                        del nova
+                p.colisao(n)
 
-                        nova = classes.Particula(
-                        (_.x),
-                        (_.y),
-                        con.MASSA_NOVA2,
-                        momentox/(2*con.MASSA_NOVA2),
-                        momentoy/(2*con.MASSA_NOVA2),
-                        con.yellow,
-                        "D"
-                    )
-                        lista_particula.append(nova)
-                        del lista_particula[lista_particula.index(_)]
-                        del nova
-                        del lista
-
-                        aaa = True
-                        break
-                    else:
-                        p.colisao(_)
-
-                else:
-                    p.colisao(_)
-
-            if aaa == True:
-                aaa = False
-                break
-
-            iteracao = False
+            else:
+                p.colisao(n)
 
     if Plot_Do_Histograma_Vel == "Y":
         lista_vel = []
@@ -160,7 +143,7 @@ while sim:
     a1 = axo.plot(ax1, label="A")
     a2 = axo.plot(ax2, label="B")
     a3 = axo.plot(ax3, label="C")
-    a4 = axo.plot(ax4, label="D")
+    a4 = axo.plot(ax4, label="D", linestyle = "dotted")
     axo.set_xlabel("Tempo")
     axo.set_ylabel("Partículas")
     axo.set_title("Concentração")
@@ -172,8 +155,18 @@ while sim:
     for p in lista_particula:
         p.desenho()
 
+    contador += 1
+
     pygame.display.update()
     c.tick(60) # Taxa de atualização do display
+
+tempo = range(0,contador+1)
+
+# print (contadorreacao)
+df = pd.DataFrame({"C1": ax1, "C2": ax2, "C3": ax3, "C4": ax4, "Tempo": tempo})
+
+df.to_csv(r"C:\JupyterLab\fefe.csv", index=False, header=True)
+
 
 pygame.quit()
 plt.close()
