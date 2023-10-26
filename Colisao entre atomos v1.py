@@ -165,7 +165,7 @@ tempo = range(0,contador+1)
 # print (contadorreacao)
 df = pd.DataFrame({"C1": ax1, "C2": ax2, "C3": ax3, "C4": ax4, "Tempo": tempo})
 
-df.to_csv(r"C:\JupyterLab\fefe.csv", index=False, header=True)
+df.to_csv(r"C:\Users\tiago220053\OneDrive - ILUM ESCOLA DE CIÊNCIA\4° Semestre\Cinetica Quimica\Kinetic-Chemistry\conc.csv", index=False, header=True)
 
 
 pygame.quit()
